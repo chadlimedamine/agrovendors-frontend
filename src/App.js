@@ -10,6 +10,7 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import { AddProduct } from "./components/Products/AddProduct";
 import MenuAppBar from "./components/MenuAppBar";
 import Categories from "./components/Categories/Categories";
+import Register from "./components/Register";
 
 export const App = () => {
   return (
@@ -71,5 +72,9 @@ export const appRouter = createBrowserRouter([
   {
     path: "login",
     element: <Login />,
+  },
+  {
+    path: "register",
+    element: <Register />,
   },
 ]);

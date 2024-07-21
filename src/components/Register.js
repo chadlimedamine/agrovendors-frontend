@@ -34,7 +34,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Register() {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -47,19 +47,24 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    //console.log(data)
+    //email/Phone/cpassword/password
     const email = data.get("email");
+    const Phone = data.get("Phone");
     const password = data.get("password");
-    if (email === "chetan@gmail.com" && password === "12345") {
+    const cpassword = data.get("cpassword");
+    if (email.length >=1 && Phone.length >=1 && password.length >=1 && cpassword.length >=1 && password === cpassword) {
       localStorage.setItem("token", "Hello World");
       navigate("/");
     } else {
-      setErr("Please Enter Correct Email or Password");
+      setErr("Please Enter Correct Informations");
     }
   };
 
-  const Register = (event) => {
+
+  const Login = (event) => {
     event.preventDefault();
-    navigate("/register");
+    navigate("/login");
   };
 
   return (
@@ -78,7 +83,7 @@ export default function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Sign up
             </Typography>
             <Box
               component="form"
@@ -96,13 +101,23 @@ export default function Login() {
                 autoComplete="email"
                 autoFocus
               />
-              <FormControl sx={{ mt: 2, width: "100%" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="Phone"
+                label="Phone Number"
+                name="Phone"
+                autoComplete="Phone"
+                autoFocus
+              />
+
+              
+              <FormControl sx={{ mt: 2, width: '100%' }} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
                   autoComplete="current-password"
                   endAdornment={
@@ -120,6 +135,30 @@ export default function Login() {
                   label="Password"
                 />
               </FormControl>
+              <FormControl sx={{ mt: 2, width: '100%' }} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? 'text' : 'password'}
+                  name="cpassword"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="cPassword"
+                  autoComplete="Phone"
+                autoFocus
+                />
+              </FormControl>
+              
               <Button
                 type="submit"
                 fullWidth
@@ -128,11 +167,11 @@ export default function Login() {
               >
                 Sign In
               </Button>
-              <a href="#" onClick={Register} role="button" tabIndex="0">
-                Register
+              <a href="#" onClick={Login} role="button" tabIndex="0">
+                Login
               </a>
             </Box>
-            {err === "" ? "" : <CollapseItem err={err} />}
+            {err === "" ? "" : (<CollapseItem err={err} />)}
           </Box>
           <Copyright sx={{ mt: 4, mb: 2 }} />
         </Container>
