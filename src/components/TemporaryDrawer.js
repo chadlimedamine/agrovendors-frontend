@@ -59,10 +59,10 @@ export default function TemporaryDrawer({ status, setStatus }) {
   const clickComponent = (index) => {
     switch (index) {
       case 0:
-        navigate("product");
+        navigate("phonenumber");
         break;
       case 1:
-        navigate("categories");
+        navigate("addpost");
         break;
       default:
         navigate("/");
@@ -76,7 +76,7 @@ export default function TemporaryDrawer({ status, setStatus }) {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {["Add Product", "Add Category", "Send email", "Drafts"].map(
+        {["Add Phone Number", "Add Post", "Home"].map(
           (text, index) => (
             <ListItem key={text} onClick={() => clickComponent(index)} disablePadding>
               <ListItemButton >
@@ -88,18 +88,7 @@ export default function TemporaryDrawer({ status, setStatus }) {
         )}
       </List>
       <Divider />
-      <List>
-        {["All Products", "All Commands", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-              {getIconComponent2(index)}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+
     </Box>
   );
 

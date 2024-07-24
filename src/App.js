@@ -11,7 +11,9 @@ import { AddProduct } from "./components/Products/AddProduct";
 import MenuAppBar from "./components/MenuAppBar";
 import Categories from "./components/Categories/Categories";
 import Register from "./components/Register";
-
+import Principle from "./components/Principle";
+import AddPhonenumber from "./components/addContent/Addphonenumber";
+import Addcontent from "./components/addContent/Addcontent";
 export const App = () => {
   return (
     <React.Fragment>
@@ -23,12 +25,12 @@ export const App = () => {
 
 export const appRouter = createBrowserRouter([
   {
-    path: "/",
+    path: "/admin",
     element: <App />,
     errorElement: <Error />,
     children: [
       {
-        path: "/",
+        path: "admin",
         element: (
           <PrivateRoute>
             <Home />
@@ -36,38 +38,16 @@ export const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "product",
-        element: <AddProduct />,
+        path: "phonenumber",
+        element: (          <PrivateRoute>   <AddPhonenumber/>       </PrivateRoute>
+
+          )
       },
       {
-        path: "categories",
-        element: <Categories />,
+        path: "addpost",
+        element:(  <PrivateRoute> <Addcontent /> </PrivateRoute>) ,
       },
-      {
-        path: "user",
-        element: (
-          <PrivateRoute>
-            <User />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "blogs",
-        element: (
-          <PrivateRoute>
-            <Blogs />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "blogs/:id",
-        element: (
-          <PrivateRoute>
-            <BlogsId />
-          </PrivateRoute>
-        ),
-      },
-    ],
+     ],
   },
   {
     path: "login",
@@ -77,4 +57,13 @@ export const appRouter = createBrowserRouter([
     path: "register",
     element: <Register />,
   },
+  {
+    path: "register",
+    element: <Register />,
+  },
+  {
+    path: "/",
+    element: <Principle />,
+  },
+  
 ]);
