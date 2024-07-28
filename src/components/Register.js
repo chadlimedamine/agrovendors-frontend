@@ -16,18 +16,11 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CollapseItem from "./CollapseItem";
-
+import { Ajouteutlisateur } from "../Fetch";
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      Created by Cherair Nadir
-      {" © "}
-      {new Date().getFullYear()}
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      Created by Cherair Nadir {" © "} {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -47,20 +40,20 @@ export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    //console.log(data)
-    //email/Phone/cpassword/password
     const email = data.get("email");
-    const Phone = data.get("Phone");
+    const phone = data.get("Phone");
     const password = data.get("password");
     const cpassword = data.get("cpassword");
-    if (email.length >=1 && Phone.length >=1 && password.length >=1 && cpassword.length >=1 && password === cpassword) {
-      localStorage.setItem("token", "Hello World");
-      navigate("/");
-    } else {
-      setErr("Please Enter Correct Informations");
+    const fullname = data.get("fullname");
+
+    if (email.length >= 1 && phone.length >= 1 && password.length >= 1 && cpassword.length >= 1 && password === cpassword && fullname.length >= 1) {
+      Ajouteutlisateur(email, fullname, password, phone);
+      navigate('/login')
+      alert("user created");
+            } else {
+      setErr("Please enter correct information.");
     }
   };
-
 
   const Login = (event) => {
     event.preventDefault();
@@ -71,26 +64,24 @@ export default function Register() {
     <>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
-          <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          <Box sx={{ marginTop: 8, display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              validate="true"
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" onSubmit={handleSubmit} validate="true" sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="fullname"
+                label="Full Name"
+                name="fullname"
+                autoComplete="fullname"
+                autoFocus
+              />
               <TextField
                 margin="normal"
                 required
@@ -99,20 +90,16 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
               />
-                <TextField
+              <TextField
                 margin="normal"
                 required
                 fullWidth
                 id="Phone"
                 label="Phone Number"
                 name="Phone"
-                autoComplete="Phone"
-                autoFocus
+                autoComplete="phone"
               />
-
-              
               <FormControl sx={{ mt: 2, width: '100%' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
@@ -153,25 +140,17 @@ export default function Register() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  label="cPassword"
-                  autoComplete="Phone"
-                autoFocus
+                  label="Confirm Password"
                 />
               </FormControl>
-              
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                Sign Up
               </Button>
               <a href="#" onClick={Login} role="button" tabIndex="0">
                 Login
               </a>
             </Box>
-            {err === "" ? "" : (<CollapseItem err={err} />)}
+            {err && <CollapseItem err={err} />}
           </Box>
           <Copyright sx={{ mt: 4, mb: 2 }} />
         </Container>

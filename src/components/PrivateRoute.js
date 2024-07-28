@@ -1,16 +1,14 @@
-//import { useEffect } from "react";
-//import { useNavigate } from "react-router-dom";
-
+// src/components/PrivateRoute.js
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function PrivateRoute({ children }) {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  //const getPassword = localStorage.getItem("passwordData");
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
-    if (!token ) {
+    if (!token) {
       navigate("/login");
     }
   }, [token, navigate]);

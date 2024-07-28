@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, TextField, Button, Typography, Card, CardContent, CardActions } from "@mui/material";
+import { Ajouternmr } from "../../Fetch";
 
 export const AddPhonenumber = () => {
   const [phoneNumber, setPhoneNumber] = React.useState("");
@@ -12,6 +13,8 @@ export const AddPhonenumber = () => {
     event.preventDefault(); // Prevent default form submission
     if (phoneNumber.trim() !== "") {
       console.log({ phoneNumber });
+      Ajouternmr(phoneNumber);
+ alert('created')
     } else {
       alert("Phone number is required");
     }

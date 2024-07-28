@@ -1,23 +1,50 @@
 import React from "react";
 import { Grid, TextField, Button, Typography, Card, CardContent, CardActions } from "@mui/material";
+import { Ajoutepost } from "../../Fetch";
 
-export const Addcontent = () => {
+const Addcontent = () => {
   const [postText, setPostText] = React.useState("");
   const [postImage, setPostImage] = React.useState(null);
+  const [postImageName, setPostImageName] = React.useState("");
+  const [postImageError, setPostImageError] = React.useState("");
 
   const handleChangePostText = (event) => {
     setPostText(event.target.value);
   };
 
   const handleChangePostImage = (event) => {
-    setPostImage(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file) {
+      // Check file type
+      const validTypes = ["image/jpeg", "image/png", "image/gif"];
+      if (!validTypes.includes(file.type)) {
+        setPostImageError("Invalid file type. Please upload an image file (jpeg, png, gif).");
+        return;
+      }
+
+      // Check file size (e.g., max 2MB)
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        setPostImageError("File size too large. Please upload an image smaller than 2MB.");
+        return;
+      }
+
+      setPostImage(file);
+      setPostImageName(file.name);
+      setPostImageError("");
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
     if (postText.trim() !== "" && postImage) {
-      console.log({ postText, postImage });
-      // You can handle the form submission logic here, such as sending the data to a server.
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+        Ajoutepost(postText, base64String);
+        alert('Post created successfully');
+      };
+      reader.readAsDataURL(postImage);
     } else {
       alert("Both text and image are required");
     }
@@ -28,7 +55,7 @@ export const Addcontent = () => {
       <Grid item xs={12} md={6}>
         <Card>
           <CardContent>
-            <Typography variant="h4" component="h1" gutterBottom style={{paddingBottom:"20px",textAlign:"center"}}>
+            <Typography variant="h4" component="h1" gutterBottom style={{ paddingBottom: "20px", textAlign: "center" }}>
               Add Post
             </Typography>
             <Grid container spacing={2}>
@@ -56,6 +83,16 @@ export const Addcontent = () => {
                     Upload Image
                   </Button>
                 </label>
+                {postImageName && (
+                  <Typography variant="body2" style={{ marginTop: "10px" }}>
+                    Selected file: {postImageName}
+                  </Typography>
+                )}
+                {postImageError && (
+                  <Typography variant="body2" color="error" style={{ marginTop: "10px" }}>
+                    {postImageError}
+                  </Typography>
+                )}
               </Grid>
             </Grid>
           </CardContent>
@@ -65,7 +102,7 @@ export const Addcontent = () => {
               variant="contained"
               color="primary"
               fullWidth
-              style={{ height: "50px",maringBottom:"40px" }}
+              style={{ height: "50px", marginBottom: "40px" }}
             >
               Submit Post
             </Button>

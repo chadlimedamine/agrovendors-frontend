@@ -1,2 +1,2 @@
-export const jsonPlaceholderData = "https://jsonplaceholder.typicode.com/users";
-export const URL = "http://localhost:3001";
+export const jsonPlaceholderData = "https://fakestoreapi.com";
+export const URL = "https://fakestoreapi.com";

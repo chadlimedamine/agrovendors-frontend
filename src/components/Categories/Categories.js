@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { AddCategory } from "../../Fetch";
+//import { AddCategory } from "../../Fetch";
 
 
 
 const Categories = () => {
   const [name, setName] = useState("")
   const handleClickAddCat = () =>{
-    AddCategory(name);
+  //  AddCategory(name);
   }
   return (
     <>

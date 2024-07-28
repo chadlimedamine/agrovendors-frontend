@@ -16,16 +16,23 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Cart from './Cart';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../Features/authSlice';
 import { useNavigate } from 'react-router-dom';
 const Principle = () => {
+  const dispatch = useDispatch();
+  const { token, username } = useSelector((state) => state.auth);
   const navigate= useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 6;
   const totalCards = 9; // Total number of cards
   const totalPages = Math.ceil(totalCards / cardsPerPage);
-
   // Generate dummy card data
   const cards = Array.from({ length: totalCards }, (_, index) => <Cart key={index} />);
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
 
   // Calculate the index range for the current page
   const startIndex = (currentPage - 1) * cardsPerPage;
@@ -91,16 +98,22 @@ const Principle = () => {
             >
               Platforme
             </Typography>
-            <Box sx={{ display: { xs: 'none', sm: 'block' }, mr: 6 }}>
+            <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 6 }}>
               <Button sx={{ color: '#fff' }}>
                 Home
               </Button>
-              <Button sx={{ color: '#fff' }} onClick={()=>navigate('/login')}>
-                Login
-              </Button>
-              <Button sx={{ color: '#fff' }}onClick={()=>navigate('/register')}>
-                Sign Up
-              </Button>
+              {token ? (
+        <div>
+          <Typography variant="h6">Welcome, {username}!</Typography>
+          <Button variant="contained" onClick={handleLogout}>Logout</Button>
+        </div>
+      ) : (
+        <div>
+          <Button variant="contained" onClick={() => navigate('/login')}>Login</Button>
+          <Button variant="contained" onClick={() => navigate('/register')}>Register</Button>
+        </div>
+      )}
+
             </Box>
           </Toolbar>
         </AppBar>
