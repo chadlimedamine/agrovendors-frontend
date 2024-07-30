@@ -55,44 +55,35 @@ const Ajoutepost = (title, image) => {
   });
 }
 
-const Ajouteutlisateur = (email, fullname,password,phone) => {
-  fetch(`${URL}/users`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({  
-      email:email,
-      username:fullname,
-      password:password,
-      name:{
-          firstname:'John',
-          lastname:'Doe'
+const Ajouteutlisateur = async (fullname, password, phone) => {
+  try {
+    const response = await fetch(`${URL}/auth/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
       },
-      address:{
-          city:'kilcoole',
-          street:'7835 new road',
-          number:3,
-          zipcode:'12926-3874',
-          geolocation:{
-              lat:'-37.3159',
-              long:'81.1496'
-          }
-      },
-      phone:phone
-    }) 
-  })
-  .then(response => {
+      body: JSON.stringify({  
+        fullName: fullname,
+        phoneNumber: phone,
+        password: password,
+      })
+    });
+
     if (!response.ok) {
-      throw new Error('Failed to create user');
+      if (response.status === 409) {
+        throw new Error('A user with that phone number already exists! You should log in!');
+      } else if (response.status === 422) {
+        throw new Error('An account for this phone number was already created for you. You should now create a password for it!');
+      } else {
+        throw new Error('Failed to create user');
+      }
     }
-    return response.json();
-  })
-  .then(data => {
+
+    const data = await response.json();
     console.log(data); // Output: { message: "Post Created" }
-  })
-  .catch(error => {
-    console.error(error); // Handle error
-  });
-}
+  } catch (error) {
+    console.error(error.message); // Handle error
+  }
+};
+
 export { Ajouternmr ,Ajoutepost ,Ajouteutlisateur};

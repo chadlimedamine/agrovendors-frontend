@@ -40,15 +40,14 @@ export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get("email");
     const phone = data.get("Phone");
     const password = data.get("password");
     const cpassword = data.get("cpassword");
     const fullname = data.get("fullname");
 
-    if (email.length >= 1 && phone.length >= 1 && password.length >= 1 && cpassword.length >= 1 && password === cpassword && fullname.length >= 1) {
-      Ajouteutlisateur(email, fullname, password, phone);
-      navigate('/login')
+    if (phone.length >= 1 && password.length >= 1 && cpassword.length >= 1 && password === cpassword && fullname.length >= 1) {
+      Ajouteutlisateur(fullname, password, phone);
+      navigate('/login');
       alert("user created");
             } else {
       setErr("Please enter correct information.");
@@ -82,15 +81,7 @@ export default function Register() {
                 autoComplete="fullname"
                 autoFocus
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
+            
               <TextField
                 margin="normal"
                 required
