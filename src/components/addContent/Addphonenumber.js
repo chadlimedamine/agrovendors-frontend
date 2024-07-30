@@ -4,7 +4,8 @@ import { Ajouternmr } from "../../Fetch";
 
 export const AddPhonenumber = () => {
   const [phoneNumber, setPhoneNumber] = React.useState("");
-
+  const token = localStorage.getItem('token');
+  console.log(token);
   const handleChangePhoneNumber = (event) => {
     setPhoneNumber(event.target.value);
   };
@@ -13,7 +14,7 @@ export const AddPhonenumber = () => {
     event.preventDefault(); // Prevent default form submission
     if (phoneNumber.trim() !== "") {
       console.log({ phoneNumber });
-      Ajouternmr(phoneNumber);
+      Ajouternmr(phoneNumber,token);
  alert('created')
     } else {
       alert("Phone number is required");

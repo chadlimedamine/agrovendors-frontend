@@ -19,7 +19,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CollapseItem from './CollapseItem';
 import { loginUser } from '../Features/authSlice';
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -45,21 +44,16 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get('email');
+    const phoneNumber = data.get('phoneNumber');
     const password = data.get('password');
    // console.log("yes2")
 
-    dispatch(loginUser({ email, password }))
-    //    console.log("yes1")
+    dispatch(loginUser({ phoneNumber, password }))
+        //    console.log("yes1")
       //  localStorage.setItem('token', result.token); // Store token in localStorage
         alert('login succes')
         navigate('/');
-        
-      
-
- 
-      
-  };
+         };
 
   return (
     <>
@@ -77,10 +71,10 @@ export default function Login() {
                 margin='normal'
                 required
                 fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
+                id='phoneNumber'
+                label='phoneNumber'
+                name='phoneNumber'
+                autoComplete='phone'
                 autoFocus
               />
               <FormControl sx={{ mt: 2, width: '100%' }} variant='outlined'>

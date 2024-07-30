@@ -1,17 +1,15 @@
 import { URL } from "../constants/Constants";
-const Ajouternmr = (nmr) =>{
-    fetch(`${URL}/products`, {
+const Ajouternmr = (nmr,token) =>{
+    fetch(`${URL}/phone-numbers/me`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+
         },
         body: JSON.stringify({  
-        title: 'test product',
-        price: nmr,
-        description: 'lorem ipsum set',
-        image: 'https://i.pravatar.cc',
-        category: 'electronic' 
-      }) 
+          phoneNumber: nmr,
+        }) 
       })
       .then(response => {
         if (!response.ok) {
@@ -85,5 +83,29 @@ const Ajouteutlisateur = async (fullname, password, phone) => {
     console.error(error.message); // Handle error
   }
 };
+// Corrected and completed `TousOffre` function with token handling
 
-export { Ajouternmr ,Ajoutepost ,Ajouteutlisateur};
+const TousOffre = async () => {
+  try {
+    const response = await fetch(`${URL}/offers`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch offers');
+    }
+
+    const data = await response.json();
+    return data; // Return the fetched data
+
+  } catch (error) {
+    throw new Error(error.message); // Rethrow the error to handle it in the component
+  }
+};
+
+
+
+export { Ajouternmr ,Ajoutepost ,Ajouteutlisateur,TousOffre};

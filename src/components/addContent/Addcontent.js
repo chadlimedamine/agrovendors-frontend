@@ -7,7 +7,8 @@ const Addcontent = () => {
   const [postImage, setPostImage] = React.useState(null);
   const [postImageName, setPostImageName] = React.useState("");
   const [postImageError, setPostImageError] = React.useState("");
-
+  const localStorageToken = localStorage.getItem('token');
+  console.log(localStorageToken);
   const handleChangePostText = (event) => {
     setPostText(event.target.value);
   };
@@ -41,7 +42,8 @@ const Addcontent = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
-        Ajoutepost(postText, base64String);
+        AjoutepostText(postText,toke);
+        AjouterpostImage(base64String,token)
         alert('Post created successfully');
       };
       reader.readAsDataURL(postImage);
