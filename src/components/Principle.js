@@ -19,21 +19,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../Features/authSlice';
 import { useNavigate } from 'react-router-dom';
 import Cart from './Cart'; // Import the updated Cart component
-import { TousOffre } from '../Fetch';
+import { RechercheOffer, TousOffre } from '../Fetch';
+import TextField from '@mui/material/TextField';
+
+
 const drawerWidth = 240;
 
 const Principle = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const token  =  localStorage.getItem('token');
   const navigate = useNavigate();
   
   const [offers, setOffers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const cardsPerPage = 6;
+  const cardsPerPage = 3;
   const [totalCards, setTotalCards] = useState(0);
   const totalPages = Math.ceil(totalCards / cardsPerPage);
   const [error, setError] = useState(null);
-
+  const [search,setSearch]= useState();
+ 
+  
   useEffect(() => {
     const loadOffers = async () => {
       try {
@@ -47,7 +52,34 @@ const Principle = () => {
 
     loadOffers();
   }, []);
+  useEffect(() => {
+    const searchoffers = async () => {
+      try {
+        const data = await RechercheOffer(search);
+        setOffers(data);
+        setTotalCards(data.length); // Assuming data is an array of offers
+      } catch (error) {
+        setError(error.message);
+      }
+    };
 
+    if (search) {
+      searchoffers();
+    } else {
+      // If there's no search query, load all offers
+      const loadOffers = async () => {
+        try {
+          const data = await TousOffre();
+          setOffers(data);
+          setTotalCards(data.length); // Assuming data is an array of offers
+        } catch (error) {
+          setError(error.message);
+        }
+      };
+
+      loadOffers();
+    }
+  }, [search]);
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login');
@@ -116,6 +148,7 @@ const Principle = () => {
             {token ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography variant="h6" sx={{ mr: 2 }}>Welcome</Typography>
+                <Button variant="contained" onClick={()=>navigate('/admin')}>Dashboard</Button>
                 <Button variant="contained" onClick={handleLogout}>Logout</Button>
               </Box>
             ) : (
@@ -141,8 +174,15 @@ const Principle = () => {
       >
         {drawer}
       </Drawer>
-      <Box component="main" sx={{ p: 3, marginLeft: `100px`, width: '100%' }}>
+   
+      <Box component="main" sx={{ p: 3, marginLeft: `100px`, width: '100%',display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column', // or 'row' if you want to center horizontally
+       }}>
         <Toolbar />
+        <TextField id="outlined-basic" label="search" variant="outlined" sx={{marginBottom:"40px",marginRight:"auto",marginLeft:"auto",justifyContent:"center",width:'440px'}} onChange={(e)=>setSearch(e.target.value)} />
+
         {error && <Typography color="error">{error}</Typography>}
         <Grid container spacing={2} justifyContent="center">
           {currentOffers.length > 0 ? (

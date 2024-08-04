@@ -17,6 +17,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CollapseItem from "./CollapseItem";
 import { Ajouteutlisateur } from "../Fetch";
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,6 +33,7 @@ export default function Register() {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showAlert, setShowAlert] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -47,8 +50,12 @@ export default function Register() {
 
     if (phone.length >= 1 && password.length >= 1 && cpassword.length >= 1 && password === cpassword && fullname.length >= 1) {
       Ajouteutlisateur(fullname, password, phone);
-      navigate('/login');
-      alert("user created");
+      setShowAlert(true); // Show the alert on successful submission
+          setTimeout(() => {
+            setShowAlert(false); // Hide the alert after a delay
+            navigate('/login');
+          }, 3000); // Adjust the delay as needed
+        
             } else {
       setErr("Please enter correct information.");
     }
@@ -63,7 +70,13 @@ export default function Register() {
     <>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
+        {showAlert && (
+              <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+               you add succes create compte
+              </Alert>
+            )}
           <Box sx={{ marginTop: 8, display: "flex", flexDirection: "column", alignItems: "center" }}>
+         
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
@@ -138,7 +151,7 @@ export default function Register() {
                 Sign Up
               </Button>
               <a href="#" onClick={Login} role="button" tabIndex="0">
-                Login
+             Si vous avez compte    Login
               </a>
             </Box>
             {err && <CollapseItem err={err} />}

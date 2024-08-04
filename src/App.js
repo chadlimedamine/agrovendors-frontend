@@ -14,6 +14,8 @@ import Register from "./components/Register";
 import Principle from "./components/Principle";
 import AddPhonenumber from "./components/addContent/Addphonenumber";
 import Addcontent from "./components/addContent/Addcontent";
+import UploadImage from "./components/addContent/UploadImage";
+import Admindash from "./components/adminpanel/Admindash";
 export const App = () => {
   return (
     <React.Fragment>
@@ -30,10 +32,10 @@ export const appRouter = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "admin",
+        path: "",
         element: (
           <PrivateRoute>
-            <Home />
+            <Admindash />
           </PrivateRoute>
         ),
       },
@@ -46,6 +48,14 @@ export const appRouter = createBrowserRouter([
       {
         path: "addpost",
         element:(  <PrivateRoute> <Addcontent /> </PrivateRoute>) ,
+      },
+      {
+        path: "addpost/upload-image/:id",
+        element: (
+          <PrivateRoute>
+            <UploadImage />
+          </PrivateRoute>
+        ),
       },
      ],
   },

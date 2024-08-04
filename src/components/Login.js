@@ -19,6 +19,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CollapseItem from './CollapseItem';
 import { loginUser } from '../Features/authSlice';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -34,6 +36,8 @@ export default function Login() {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showAlert, setShowAlert] = React.useState(false);
+
   const { loading, error } = useSelector((state) => state.auth);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -51,16 +55,25 @@ export default function Login() {
     dispatch(loginUser({ phoneNumber, password }))
         //    console.log("yes1")
       //  localStorage.setItem('token', result.token); // Store token in localStorage
-        alert('login succes')
+      setShowAlert(true); // Show the alert on successful submission
+      setTimeout(() => {
+        setShowAlert(false); // Hide the alert after a delay
         navigate('/');
+      }, 3000); // Adjust the delay as needed
          };
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
+        {showAlert && (
+              <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+               you add succes login 
+              </Alert>
+            )}
           <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+    
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>  
               <LockOutlinedIcon />
             </Avatar>
             <Typography component='h1' variant='h5'>

@@ -1,11 +1,16 @@
 import React from "react";
 import { Grid, TextField, Button, Typography, Card, CardContent, CardActions } from "@mui/material";
 import { Ajouternmr } from "../../Fetch";
-
+import { useNavigate } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 export const AddPhonenumber = () => {
+  const navigate= useNavigate();
   const [phoneNumber, setPhoneNumber] = React.useState("");
+  const [showAlert, setShowAlert] = React.useState(false);
+
   const token = localStorage.getItem('token');
-  console.log(token);
+ 
   const handleChangePhoneNumber = (event) => {
     setPhoneNumber(event.target.value);
   };
@@ -14,18 +19,30 @@ export const AddPhonenumber = () => {
     event.preventDefault(); // Prevent default form submission
     if (phoneNumber.trim() !== "") {
       console.log({ phoneNumber });
-      Ajouternmr(phoneNumber,token);
- alert('created')
+      Ajouternmr(phoneNumber, token);
+      setShowAlert(true); // Show the alert on successful submission
+          setTimeout(() => {
+            setShowAlert(false); // Hide the alert after a delay
+            navigate('/admin');
+          }, 4000); // Adjust the delay as needed
+        
+    
     } else {
       alert("Phone number is required");
     }
   };
+
 
   return (
     <Grid container spacing={2} justifyContent="center" style={{ marginTop: "10%" }}>
       <Grid item xs={12} md={6}>
         <Card style={{padding:'40px'}} >
           <CardContent>
+          {showAlert && (
+              <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+               you add succes phone number
+              </Alert>
+            )}
             <Typography variant="h4" component="h1" gutterBottom style={{paddingBottom:"20px",textAlign:"center"}}>
               Add Phone Number
             </Typography>
