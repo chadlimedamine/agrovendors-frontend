@@ -32,7 +32,7 @@ const Principle = () => {
   
   const [offers, setOffers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const cardsPerPage = 3;
+  const cardsPerPage = 12;
   const [totalCards, setTotalCards] = useState(0);
   const totalPages = Math.ceil(totalCards / cardsPerPage);
   const [error, setError] = useState(null);
@@ -44,7 +44,8 @@ const Principle = () => {
       try {
         const data = await TousOffre();
         setOffers(data);
-        setTotalCards(data.length); // Assuming data is an array of offers
+        setTotalCards(data.length);
+        console.log("total : " +data.length) // Assuming data is an array of offers
       } catch (error) {
         setError(error.message);
       }

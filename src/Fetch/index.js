@@ -194,8 +194,52 @@ const Tousmesphone = async (token) => {
   }
 };
 
+const GetUserById = async (token,id) => {
+  try {
+    const response = await fetch(`${URL}/users/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${token}`
+      },
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw new Error('Failed to fetch user');
+    }
+
+    const data = await response.json();
+    return data; // Return the fetched data
+
+  } catch (error) {
+    throw new Error(error.message); // Rethrow the error to handle it in the component
+  }
+};
+
+const GetImagesByOfferId = async (token,id) => {
+  try {
+    const response = await fetch(`${URL}/Offers/${id}/images`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${token}`
+      },
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw new Error('Failed to fetch user');
+    }
+
+    const data = await response.json();
+    return data; // Return the fetched data
+
+  } catch (error) {
+    throw new Error(error.message); // Rethrow the error to handle it in the component
+  }
+};
 
 
 
 
-export { Ajouternmr ,AjouterpostImage,AjoutepostText ,Ajouteutlisateur,TousOffre,RechercheOffer,TousmesOffre,Tousmesphone};
+
+export { Ajouternmr,GetUserById,GetImagesByOfferId ,AjouterpostImage,AjoutepostText ,Ajouteutlisateur,TousOffre,RechercheOffer,TousmesOffre,Tousmesphone};

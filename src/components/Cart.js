@@ -9,14 +9,22 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { GetUserById,GetImagesByOfferId } from "../../src/Fetch/index";
+import {useState,useEffect} from "react";
 
 const Cart = ({ offer }) => {
+  const [ownerName, setOwnerName] = useState('');
+  const [owner, setOwner] = useState({ name: '', phone: '' });
+  const [ownerImages, setownerImages] = useState([]);
+  const token = localStorage.getItem('token');
   const DescriptionText = styled(Typography)(({ theme }) => ({
     fontWeight: 'bold',
     fontSize: '1.4rem',
   }));
+  
   const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
+    
     return <IconButton {...other} />;
   })(({ theme, expand }) => ({
     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
@@ -25,6 +33,30 @@ const Cart = ({ offer }) => {
       duration: theme.transitions.duration.shortest,
     }),
   }));
+
+  useEffect(() => {
+  
+
+    const fetchOwnerData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const ownerData = await GetUserById(token, offer.ownerId);
+        const ownerImages = await GetImagesByOfferId(token, offer.id);
+        setOwnerName(ownerData.fullName);
+        setownerImages(ownerImages);
+        const formattedPhoneNumbers = ownerData.phoneNumbers.map(phoneObj => phoneObj.phoneNumber).join(', ');
+        setOwner({
+          name: ownerData.fullName , // Default value if name is not present
+          phone: formattedPhoneNumbers , // Default value if email is not present
+        });// Adjust according to your API response
+      } catch (err) {
+        console.error('Failed to fetch owner data:', err);
+      }
+    }; 
+    if (offer.ownerId) {
+      fetchOwnerData();
+    }
+  }, [offer.ownerId, token]);
 
   const [expanded, setExpanded] = React.useState(false);
 
@@ -45,14 +77,14 @@ const Cart = ({ offer }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="0557938770"
+        title={owner.name}
+        subheader={owner.phone}
       />
-      {offer.image && (
+      {ownerImages[0] && (
         <CardMedia
           component="img"
           height="194"
-          image={offer.image}
+          image={ownerImages[0]}
           alt="Offer image"
         />
       )}
