@@ -26,6 +26,7 @@ const Ajouternmr = (nmr,token) =>{
 }
 
 const AjoutepostText = (text, token) => {
+  console.log(text);
   return fetch(`${URL}/offers`, {
     method: 'POST',
     headers: {
@@ -33,7 +34,7 @@ const AjoutepostText = (text, token) => {
       'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({
-      name: text,
+      description: text,
     })
   })
   .then(response => {
@@ -48,6 +49,35 @@ const AjoutepostText = (text, token) => {
   })
   .catch(error => {
     console.error(error); // Handle error
+    throw error;
+  });
+}
+
+const UploadImage = (imageFile, offerId, token) => {
+  
+  const formData = new FormData();
+  formData.append('files', imageFile);
+
+  return fetch(`${URL}/offers/${offerId}/images`, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Authorization': `bearer ${token}`
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to upload image');
+    }
+    return;
+  })
+  .then(data => {
+    console.log(data); // Output: { message: "Post Created" }
+    return data;
+  })
+  .catch(error => {
+    console.error(error); // Handle error
+    alert(error);
     throw error;
   });
 }
@@ -242,4 +272,4 @@ const GetImagesByOfferId = async (token,id) => {
 
 
 
-export { Ajouternmr,GetUserById,GetImagesByOfferId ,AjouterpostImage,AjoutepostText ,Ajouteutlisateur,TousOffre,RechercheOffer,TousmesOffre,Tousmesphone};
+export { UploadImage, Ajouternmr,GetUserById,GetImagesByOfferId ,AjouterpostImage,AjoutepostText ,Ajouteutlisateur,TousOffre,RechercheOffer,TousmesOffre,Tousmesphone};

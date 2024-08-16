@@ -15,9 +15,9 @@ const UploadImage = () => {
     const file = event.target.files[0];
     if (file) {
       // Check file type
-      const validTypes = ["image/jpeg", "image/png", "image/gif"];
+      const validTypes = ["image/jpeg", "image/png"];
       if (!validTypes.includes(file.type)) {
-        setPostImageError("Invalid file type. Please upload an image file (jpeg, png, gif).");
+        setPostImageError("Invalid file type. Please upload an image file (jpeg, png).");
         return;
       }
 
