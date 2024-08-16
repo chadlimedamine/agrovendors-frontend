@@ -49,7 +49,7 @@ export default function MenuAppBar() {
             <MenuIcon  />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Platforme Dash
+            لوحة التحكم
           </Typography>
             <div>
               <IconButton
@@ -77,8 +77,8 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>حسابي الشخصي</MenuItem>
+                <MenuItem onClick={handleClose}>إعدادات حسبابي</MenuItem>
               </Menu>
             </div>
           

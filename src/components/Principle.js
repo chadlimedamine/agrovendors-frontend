@@ -106,11 +106,11 @@ const Principle = () => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ mx: 2 }}>
-        Platforme
+        بورصة الفلاح
       </Typography>
       <Divider />
       <List>
-        {['Home', 'About', 'Contact'].map((item) => (
+        {['الصفحة الرئيسية', '‘إعرف أكثر عن منصة بورصة الفلاح', 'تواصل معنا'].map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <ListItemText primary={item} />
@@ -140,22 +140,22 @@ const Principle = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            Platforme
+            بورصة الفلاح
           </Typography>
           <Box sx={{ display: { xs: 'flex', sm: 'flex' }, mr: 6 }}>
-            <Button sx={{ color: '#fff' }}>
+            {/* <Button sx={{ color: '#fff' }}>
               Home
-            </Button>
+            </Button> */}
             {token ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="h6" sx={{ mr: 2 }}>Welcome</Typography>
-                <Button variant="contained" onClick={()=>navigate('/admin')}>Dashboard</Button>
-                <Button variant="contained" onClick={handleLogout}>Logout</Button>
+                <Typography variant="h6" sx={{ mr: 2 }}>الصفحة الرئيسية</Typography>
+                <Button variant="contained" onClick={()=>navigate('/admin')}>لوحة التحكم</Button>
+                <Button variant="contained" onClick={handleLogout}>تسجيل الخروج</Button>
               </Box>
             ) : (
               <Box sx={{ display: 'flex', gap: 2 }}>
-                <Button variant="contained" onClick={() => navigate('/login')}>Login</Button>
-                <Button variant="contained" onClick={() => navigate('/register')}>Register</Button>
+                <Button variant="contained" onClick={() => navigate('/login')}>تسجيل الدخول</Button>
+                <Button variant="contained" onClick={() => navigate('/register')}>تسجيل معلن جديد</Button>
               </Box>
             )}
           </Box>
@@ -182,7 +182,7 @@ const Principle = () => {
         flexDirection: 'column', // or 'row' if you want to center horizontally
        }}>
         <Toolbar />
-        <TextField id="outlined-basic" label="search" variant="outlined" sx={{marginBottom:"40px",marginRight:"auto",marginLeft:"auto",justifyContent:"center",width:'440px'}} onChange={(e)=>setSearch(e.target.value)} />
+        <TextField id="outlined-basic" label="إبحث عن إعلانات هنا" variant="outlined" sx={{marginBottom:"40px",marginRight:"auto",marginLeft:"auto",justifyContent:"center",width:'440px'}} onChange={(e)=>setSearch(e.target.value)} />
 
         {error && <Typography color="error">{error}</Typography>}
         <Grid container spacing={2} justifyContent="center">

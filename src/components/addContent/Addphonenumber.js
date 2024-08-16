@@ -44,13 +44,13 @@ export const AddPhonenumber = () => {
               </Alert>
             )}
             <Typography variant="h4" component="h1" gutterBottom style={{paddingBottom:"20px",textAlign:"center"}}>
-              Add Phone Number
+              أضف رقم هاتف
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   id="outlined-basic"
-                  label="Phone Number"
+                  label="رقم الهاتف"
                   variant="outlined"
                   fullWidth
                   onChange={handleChangePhoneNumber}
@@ -62,11 +62,11 @@ export const AddPhonenumber = () => {
             <Button
               onClick={handleSubmit}
               variant="contained"
-              color="primary"
+              color="success"
               
               style={{ height: "50px" }}
             >
-              Submit Phone Number
+              أضف رقم الهاتف
             </Button>
           </CardActions>
         </Card>
