@@ -1,5 +1,7 @@
 import React from "react";
 import { Grid, TextField, Button, Typography, Card, CardContent, CardActions } from "@mui/material";
+// import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import { useNavigate } from "react-router-dom";
 import { AjoutepostText } from "../../Fetch";
 import { UploadImage } from '../../Fetch';
@@ -11,6 +13,7 @@ const Addcontent = () => {
   const [postImage, setPostImage] = React.useState(null);
   const [postImageName, setPostImageName] = React.useState("");
   const [postImageError, setPostImageError] = React.useState("");
+  const [image, setImage] = React.useState(null);
 
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -39,6 +42,10 @@ const Addcontent = () => {
       setPostImage(file);
       setPostImageName(file.name);
       setPostImageError("");
+
+      // Create a URL for the selected image
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
     }
   };
 
@@ -83,17 +90,20 @@ const Addcontent = () => {
             
           {showAlert && (
               <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-               you add succes add offers
+               تم إضافة عرضك بنجاح
               </Alert>
             )}
-            <Typography variant="h4" component="h1" gutterBottom style={{ paddingBottom: "20px", textAlign: "center" }}>
-              Add Post
+            <Typography variant="h5" component="h5" gutterBottom style={{ paddingBottom: "0px", textAlign: "center" }}>
+              أضف عرضك الخاص
+            </Typography>
+            <Typography variant="h6" component="h6" gutterBottom style={{ paddingBottom: "20px", textAlign: "center" }}>
+              مثال: متوفر 10 أطنان تفاح قالة جودة عالية مباشرة من عند الفلاح
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   id="post-text"
-                  label="Post Text"
+                  label="أكتب عرضك هنا"
                   variant="outlined"
                   fullWidth
                   multiline
@@ -101,6 +111,26 @@ const Addcontent = () => {
                   onChange={handleChangePostText}
                 />
               </Grid>
+              {/* {image && (
+                <Avatar
+                  alt="Selected Image"
+                  src={image}
+                  sx={{ width: 100, height: 100, mt: 2 }}
+                />
+              )} */}
+              
+              {image && (
+              <Box
+                component="img"
+                src={image} 
+                sx={{
+                  width: '80%',    // Fill the available width
+                  height: 'auto',   // Maintain aspect ratio (or use '100%' to fill the height too)
+                  mt: 2,
+                  objectFit: 'cover' // Optional: covers the area without stretching
+                }}
+              />
+            )}
               <Grid item xs={12}>
                 <input
                   accept="image/*"
@@ -111,12 +141,12 @@ const Addcontent = () => {
                 />
                 <label htmlFor="post-image">
                   <Button variant="contained" component="span" fullWidth color="secondary">
-                    Upload Image
+                    أضف صورة
                   </Button>
                 </label>
                 {postImageName && (
                   <Typography variant="body2" style={{ marginTop: "10px" }}>
-                    Selected file: {postImageName}
+                    الصورة المختارة: {postImageName}
                   </Typography>
                 )}
                 {postImageError && (
@@ -135,7 +165,7 @@ const Addcontent = () => {
               fullWidth
               style={{ height: "50px", marginBottom: "40px" }}
             >
-              Submit Post
+              أضف العرض
             </Button>
           </CardActions>
         </Card>
