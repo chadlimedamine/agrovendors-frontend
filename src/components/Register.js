@@ -22,7 +22,7 @@ import CheckIcon from '@mui/icons-material/Check';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      Created by Cherair Nadir {" © "} {new Date().getFullYear()}
+      تم تصميم الموقع من طرف شادلي محمد أمين {" © "} {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -81,7 +81,7 @@ export default function Register() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign up
+            تسجيل حساب جديد
             </Typography>
             <Box component="form" onSubmit={handleSubmit} validate="true" sx={{ mt: 1 }}>
               <TextField
@@ -89,7 +89,7 @@ export default function Register() {
                 required
                 fullWidth
                 id="fullname"
-                label="Full Name"
+                label="الإسم الكامل"
                 name="fullname"
                 autoComplete="fullname"
                 autoFocus
@@ -100,12 +100,12 @@ export default function Register() {
                 required
                 fullWidth
                 id="Phone"
-                label="Phone Number"
+                label="رقم الهاتف"
                 name="Phone"
                 autoComplete="phone"
               />
               <FormControl sx={{ mt: 2, width: '100%' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password">كلمة السر</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
@@ -123,11 +123,11 @@ export default function Register() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  label="Password"
+                  label="كلمة السر"
                 />
               </FormControl>
               <FormControl sx={{ mt: 2, width: '100%' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password">تأكيد كلمة السر</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
@@ -144,14 +144,14 @@ export default function Register() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  label="Confirm Password"
+                  label="تأكيد كلمة السر"
                 />
               </FormControl>
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Sign Up
+                تسجيل
               </Button>
               <a href="#" onClick={Login} role="button" tabIndex="0">
-             Si vous avez compte    Login
+             إذا كنت تملك حساب سجل الدخول هنا
               </a>
             </Box>
             {err && <CollapseItem err={err} />}

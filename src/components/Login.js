@@ -24,7 +24,7 @@ import CheckIcon from '@mui/icons-material/Check';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      Created by Cherair Nadir {' © '} {new Date().getFullYear()}
+      تم تصميم الموقع من طرف شادلي محمد أمين {' © '} {new Date().getFullYear()}
     </Typography>
   );
 }
