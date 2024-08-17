@@ -68,7 +68,7 @@ export default function Login() {
         <Container component="main" maxWidth="xs">
         {showAlert && (
               <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-               you add succes login 
+               تم تسجيل الدخول بنجاح
               </Alert>
             )}
           <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
