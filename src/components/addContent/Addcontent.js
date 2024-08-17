@@ -144,11 +144,11 @@ const Addcontent = () => {
                     أضف صورة
                   </Button>
                 </label>
-                {postImageName && (
+                {/* {postImageName && (
                   <Typography variant="body2" style={{ marginTop: "10px" }}>
                     الصورة المختارة: {postImageName}
                   </Typography>
-                )}
+                )} */}
                 {postImageError && (
                   <Typography variant="body2" color="error" style={{ marginTop: "10px" }}>
                     {postImageError}
